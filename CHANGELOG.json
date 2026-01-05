@@ -1,0 +1,43 @@
+{
+  "ir_version": "1.0",
+  "project": "omniproxy",
+  "repository": "https://github.com/grokify/omniproxy",
+  "releases": [
+    {
+      "version": "0.1.0",
+      "date": "2026-01-04",
+      "highlights": [
+        { "description": "Universal HTTP/HTTPS proxy with MITM support for traffic capture, database storage, and cross-platform system proxy configuration" }
+      ],
+      "added": [
+        { "description": "HTTP forward proxy with HTTPS MITM (Man-in-the-Middle) interception" },
+        { "description": "Reverse proxy with automatic TLS via Let's Encrypt/ACME" },
+        { "description": "Traffic capture in multiple formats: NDJSON, HAR, IR (APISpecRift)" },
+        { "description": "Database storage backends: SQLite (team mode) and PostgreSQL (production mode)" },
+        { "description": "Async traffic storage with configurable queue size, batch size, and workers" },
+        { "description": "Request filtering by host, path, and HTTP method with wildcard support" },
+        { "description": "Binary content detection using magic bytes and MIME type heuristics" },
+        { "description": "Proxy chaining through upstream proxy servers" },
+        { "description": "Prometheus metrics and health check endpoints (/metrics, /healthz, /readyz)" },
+        { "description": "System proxy configuration for macOS, Windows, and Linux (GNOME/KDE)" },
+        { "description": "Pure Go CA certificate generation (no OpenSSL dependency)" },
+        { "description": "CA certificate installation into system trust stores" },
+        { "description": "YAML configuration file support" },
+        { "description": "CLI commands: serve, reverse, daemon, ca, system, config" },
+        { "description": "Docker support with multi-stage Dockerfile and docker-compose" },
+        { "description": "Sensitive header filtering (Authorization, Cookie, etc.) by default" }
+      ],
+      "documentation": [
+        { "description": "Comprehensive README with usage examples for all deployment modes" },
+        { "description": "Database URL format documentation for SQLite and PostgreSQL" },
+        { "description": "Prometheus metrics reference table" },
+        { "description": "Configuration file schema with examples" }
+      ],
+      "build": [
+        { "description": "GitHub Actions CI/CD workflows for build, lint, and test" },
+        { "description": "GoReleaser configuration for multi-platform binary releases" },
+        { "description": "Dependabot configuration for Go modules and GitHub Actions" }
+      ]
+    }
+  ]
+}
