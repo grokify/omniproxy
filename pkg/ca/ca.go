@@ -177,8 +177,8 @@ func (ca *CA) Save(certPath, keyPath string) error {
 		return fmt.Errorf("failed to create key directory: %w", err)
 	}
 
-	// Write certificate (readable by all)
-	if err := os.WriteFile(certPath, ca.certPEM, 0644); err != nil {
+	// Write certificate (readable by all - CA certs are public)
+	if err := os.WriteFile(certPath, ca.certPEM, 0644); err != nil { //nolint:gosec // G306: CA certificates are public and need to be readable
 		return fmt.Errorf("failed to write certificate: %w", err)
 	}
 

@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/grokify/omniproxy/pkg/backend"
 	"github.com/grokify/omniproxy/pkg/ca"
@@ -418,7 +419,12 @@ func runServe(opts *serveOptions) error {
 
 		go func() {
 			fmt.Printf("Metrics/health server on %s\n", metricsAddr)
-			if err := http.ListenAndServe(metricsAddr, mux); err != nil {
+			server := &http.Server{
+				Addr:              metricsAddr,
+				Handler:           mux,
+				ReadHeaderTimeout: 10 * time.Second,
+			}
+			if err := server.ListenAndServe(); err != nil {
 				fmt.Fprintf(os.Stderr, "Metrics server error: %v\n", err)
 			}
 		}()

@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"regexp"
 )
 
 // RLSHelper manages PostgreSQL Row-Level Security for multi-tenancy.
@@ -150,9 +151,18 @@ func (r *RLSHelper) ClearTenantContext(ctx context.Context) error {
 	return err
 }
 
+// validRoleName matches valid PostgreSQL role names (alphanumeric and underscore only).
+var validRoleName = regexp.MustCompile(`^[a-zA-Z_][a-zA-Z0-9_]*$`)
+
 // CreateBypassRole creates a role that bypasses RLS (for admin/system operations).
 func (r *RLSHelper) CreateBypassRole(ctx context.Context, roleName string) error {
+	// Validate role name to prevent SQL injection (DDL doesn't support placeholders)
+	if !validRoleName.MatchString(roleName) {
+		return fmt.Errorf("invalid role name: must be alphanumeric with underscores")
+	}
+
 	// Create role if not exists
+	//nolint:gosec // G201: role name is validated above to prevent SQL injection
 	createRole := fmt.Sprintf(`
 		DO $$
 		BEGIN

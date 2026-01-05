@@ -95,7 +95,9 @@ func TestFinishCapture(t *testing.T) {
 		Header:     http.Header{"Content-Type": []string{"application/json"}},
 	}
 
-	c.FinishCapture(rec, resp)
+	if err := c.FinishCapture(rec, resp); err != nil {
+		t.Fatalf("FinishCapture failed: %v", err)
+	}
 
 	if rec.Response.Status != 200 {
 		t.Errorf("expected 200, got %d", rec.Response.Status)
@@ -158,7 +160,9 @@ func TestRecords(t *testing.T) {
 	for i := 0; i < 3; i++ {
 		req, _ := http.NewRequest("GET", "https://api.example.com/test", nil)
 		rec := c.StartCapture(req)
-		c.FinishCapture(rec, &http.Response{StatusCode: 200})
+		if err := c.FinishCapture(rec, &http.Response{StatusCode: 200}); err != nil {
+			t.Fatalf("FinishCapture failed: %v", err)
+		}
 	}
 
 	records := c.Records()
@@ -172,7 +176,9 @@ func TestClear(t *testing.T) {
 
 	req, _ := http.NewRequest("GET", "https://api.example.com/test", nil)
 	rec := c.StartCapture(req)
-	c.FinishCapture(rec, &http.Response{StatusCode: 200})
+	if err := c.FinishCapture(rec, &http.Response{StatusCode: 200}); err != nil {
+		t.Fatalf("FinishCapture failed: %v", err)
+	}
 
 	if len(c.Records()) != 1 {
 		t.Error("expected 1 record before clear")
@@ -195,7 +201,9 @@ func TestHandler(t *testing.T) {
 
 	req, _ := http.NewRequest("GET", "https://api.example.com/test", nil)
 	rec := c.StartCapture(req)
-	c.FinishCapture(rec, &http.Response{StatusCode: 200})
+	if err := c.FinishCapture(rec, &http.Response{StatusCode: 200}); err != nil {
+		t.Fatalf("FinishCapture failed: %v", err)
+	}
 
 	if handled == nil {
 		t.Error("handler should have been called")
@@ -218,7 +226,9 @@ func TestJSONOutput(t *testing.T) {
 
 	req, _ := http.NewRequest("POST", "https://api.example.com/users", nil)
 	rec := c.StartCapture(req)
-	c.FinishCapture(rec, &http.Response{StatusCode: 201})
+	if err := c.FinishCapture(rec, &http.Response{StatusCode: 201}); err != nil {
+		t.Fatalf("FinishCapture failed: %v", err)
+	}
 
 	// Parse output as JSON
 	var output Record
@@ -362,7 +372,9 @@ func TestSkipBinaryResponse(t *testing.T) {
 		ContentLength: int64(len(pngData)),
 	}
 
-	c.FinishCapture(rec, resp)
+	if err := c.FinishCapture(rec, resp); err != nil {
+		t.Fatalf("FinishCapture failed: %v", err)
+	}
 
 	if !rec.Response.IsBinary {
 		t.Error("expected IsBinary to be true for PNG response")

@@ -229,11 +229,11 @@ func (d *Daemon) Status() *Status {
 	defer d.mu.RUnlock()
 
 	status := &Status{
-		Running:     d.running,
-		Version:     d.config.Version,
-		ProxyPort:   d.config.ProxyPort,
-		Database:    d.config.Database,
-		Requests:    d.requests,
+		Running:   d.running,
+		Version:   d.config.Version,
+		ProxyPort: d.config.ProxyPort,
+		Database:  d.config.Database,
+		Requests:  d.requests,
 	}
 
 	if d.running {

@@ -29,8 +29,8 @@ func TestDatabaseTrafficStore(t *testing.T) {
 	// Test Store
 	t.Run("Store", func(t *testing.T) {
 		rec := &capture.Record{
-			StartTime: time.Now(),
-			EndTime:   time.Now().Add(100 * time.Millisecond),
+			StartTime:  time.Now(),
+			EndTime:    time.Now().Add(100 * time.Millisecond),
 			DurationMs: 100.0,
 			Request: capture.RequestRecord{
 				Method:      "GET",

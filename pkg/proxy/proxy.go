@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/elazarl/goproxy"
+	"github.com/grokify/mogo/log/slogutil"
 	"github.com/grokify/omniproxy/pkg/ca"
 	"github.com/grokify/omniproxy/pkg/capture"
 )
@@ -164,7 +165,10 @@ func (p *Proxy) setupCapture() {
 	p.server.OnResponse().DoFunc(func(resp *http.Response, ctx *goproxy.ProxyCtx) *http.Response {
 		if p.capturer != nil && ctx.UserData != nil {
 			if rec, ok := ctx.UserData.(*capture.Record); ok {
-				p.capturer.FinishCapture(rec, resp)
+				if err := p.capturer.FinishCapture(rec, resp); err != nil {
+					logger := slogutil.LoggerFromContext(resp.Request.Context(), slogutil.Null())
+					logger.Error("failed to finish capture", "error", err)
+				}
 			}
 		}
 		return resp

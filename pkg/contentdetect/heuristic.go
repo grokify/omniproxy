@@ -236,9 +236,10 @@ func looksLikeJSON(data []byte) bool {
 			continue
 		}
 
-		if b == opening {
+		switch b {
+		case opening:
 			depth++
-		} else if b == closing {
+		case closing:
 			depth--
 			if depth == 0 {
 				// Check remaining is only whitespace

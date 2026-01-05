@@ -17,6 +17,7 @@ import (
 
 	"golang.org/x/crypto/acme/autocert"
 
+	"github.com/grokify/mogo/log/slogutil"
 	"github.com/grokify/omniproxy/pkg/capture"
 )
 
@@ -175,7 +176,10 @@ func (rp *ReverseProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// Finish capture
 	if rec != nil {
-		rp.capturer.FinishCaptureWithStatus(rec, wrapper.statusCode, wrapper.bytesWritten)
+		if err := rp.capturer.FinishCaptureWithStatus(rec, wrapper.statusCode, wrapper.bytesWritten); err != nil {
+			logger := slogutil.LoggerFromContext(r.Context(), slogutil.Null())
+			logger.Error("failed to finish capture", "error", err)
+		}
 	}
 }
 
@@ -242,7 +246,12 @@ func (rp *ReverseProxy) ListenAndServe() error {
 		}
 
 		log.Printf("HTTP server listening on %s", httpAddr)
-		if err := http.ListenAndServe(httpAddr, handler); err != nil {
+		server := &http.Server{
+			Addr:              httpAddr,
+			Handler:           handler,
+			ReadHeaderTimeout: 10 * time.Second,
+		}
+		if err := server.ListenAndServe(); err != nil {
 			errChan <- fmt.Errorf("HTTP server: %w", err)
 		}
 	}()
@@ -252,9 +261,10 @@ func (rp *ReverseProxy) ListenAndServe() error {
 		httpsAddr := fmt.Sprintf(":%d", rp.config.HTTPSPort)
 
 		server := &http.Server{
-			Addr:      httpsAddr,
-			Handler:   rp,
-			TLSConfig: rp.TLSConfig(),
+			Addr:              httpsAddr,
+			Handler:           rp,
+			TLSConfig:         rp.TLSConfig(),
+			ReadHeaderTimeout: 10 * time.Second,
 		}
 
 		log.Printf("HTTPS server listening on %s", httpsAddr)
@@ -271,6 +281,7 @@ func (rp *ReverseProxy) TLSConfig() *tls.Config {
 	return &tls.Config{
 		GetCertificate: rp.certManager.GetCertificate,
 		NextProtos:     []string{"h2", "http/1.1"},
+		MinVersion:     tls.VersionTLS12,
 	}
 }
 

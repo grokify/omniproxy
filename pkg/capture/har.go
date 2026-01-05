@@ -50,15 +50,15 @@ type HARRequest struct {
 
 // HARResponse represents an HTTP response.
 type HARResponse struct {
-	Status      int          `json:"status"`
-	StatusText  string       `json:"statusText"`
-	HTTPVersion string       `json:"httpVersion"`
-	Cookies     []HARCookie  `json:"cookies"`
-	Headers     []HARHeader  `json:"headers"`
-	Content     HARContent   `json:"content"`
-	RedirectURL string       `json:"redirectURL"`
-	HeadersSize int          `json:"headersSize"`
-	BodySize    int          `json:"bodySize"`
+	Status      int         `json:"status"`
+	StatusText  string      `json:"statusText"`
+	HTTPVersion string      `json:"httpVersion"`
+	Cookies     []HARCookie `json:"cookies"`
+	Headers     []HARHeader `json:"headers"`
+	Content     HARContent  `json:"content"`
+	RedirectURL string      `json:"redirectURL"`
+	HeadersSize int         `json:"headersSize"`
+	BodySize    int         `json:"bodySize"`
 }
 
 // HARHeader represents an HTTP header.

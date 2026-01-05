@@ -228,7 +228,7 @@ func (l *linuxProxy) setGnomeProxy(host string, port int) error {
 	}
 
 	for _, args := range commands {
-		if err := exec.Command(args[0], args[1:]...).Run(); err != nil {
+		if err := exec.Command(args[0], args[1:]...).Run(); err != nil { //nolint:gosec // G204: args are not user-controlled shell input
 			return err
 		}
 	}
@@ -252,7 +252,7 @@ func (l *linuxProxy) setKDEProxy(host string, port int) error {
 	}
 
 	for _, args := range commands {
-		if err := exec.Command(args[0], args[1:]...).Run(); err != nil {
+		if err := exec.Command(args[0], args[1:]...).Run(); err != nil { //nolint:gosec // G204: args are not user-controlled shell input
 			return err
 		}
 	}
@@ -271,7 +271,7 @@ func (l *linuxProxy) fileExists(path string) bool {
 	return err == nil
 }
 
-// copyFile copies a file to a destination.
+// copyFile copies a file to a destination (used for CA certificates).
 func (l *linuxProxy) copyFile(src, dst string) error {
 	// Ensure destination directory exists
 	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
@@ -283,5 +283,5 @@ func (l *linuxProxy) copyFile(src, dst string) error {
 		return err
 	}
 
-	return os.WriteFile(dst, input, 0644)
+	return os.WriteFile(dst, input, 0644) //nolint:gosec // G306: CA certificates are public and need to be readable
 }

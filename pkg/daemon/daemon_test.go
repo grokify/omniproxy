@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/grokify/mogo/log/slogutil"
 )
 
 func TestDaemonConfig(t *testing.T) {
@@ -257,7 +259,12 @@ func TestDaemonControlAPI(t *testing.T) {
 	if err := d.Start(ctx); err != nil {
 		t.Fatalf("failed to start daemon: %v", err)
 	}
-	defer d.Stop(ctx)
+	defer func() {
+		if err := d.Stop(ctx); err != nil {
+			logger := slogutil.LoggerFromContext(ctx, slogutil.Null())
+			logger.Error("failed to stop daemon", "error", err)
+		}
+	}()
 
 	client := NewClient(cfg.SocketPath)
 
@@ -299,7 +306,12 @@ func TestDaemonControlAPIMethodNotAllowed(t *testing.T) {
 	if err := d.Start(ctx); err != nil {
 		t.Fatalf("failed to start daemon: %v", err)
 	}
-	defer d.Stop(ctx)
+	defer func() {
+		if err := d.Stop(ctx); err != nil {
+			logger := slogutil.LoggerFromContext(ctx, slogutil.Null())
+			logger.Error("failed to stop daemon", "error", err)
+		}
+	}()
 
 	// Create client that uses Unix socket
 	client := NewClient(cfg.SocketPath)

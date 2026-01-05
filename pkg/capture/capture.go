@@ -199,7 +199,7 @@ func (c *Capturer) StartCapture(req *http.Request) *Record {
 }
 
 // FinishCapture completes capturing a response.
-func (c *Capturer) FinishCapture(rec *Record, resp *http.Response) {
+func (c *Capturer) FinishCapture(rec *Record, resp *http.Response) error {
 	rec.EndTime = time.Now()
 	rec.DurationMs = float64(rec.EndTime.Sub(rec.StartTime).Microseconds()) / 1000.0
 
@@ -235,11 +235,11 @@ func (c *Capturer) FinishCapture(rec *Record, resp *http.Response) {
 		}
 	}
 
-	c.finishRecord(rec)
+	return c.finishRecord(rec)
 }
 
 // FinishCaptureWithStatus completes capturing with just status code and size (for reverse proxy).
-func (c *Capturer) FinishCaptureWithStatus(rec *Record, statusCode int, bytesWritten int64) {
+func (c *Capturer) FinishCaptureWithStatus(rec *Record, statusCode int, bytesWritten int64) error {
 	rec.EndTime = time.Now()
 	rec.DurationMs = float64(rec.EndTime.Sub(rec.StartTime).Microseconds()) / 1000.0
 	rec.Response = ResponseRecord{
@@ -247,11 +247,11 @@ func (c *Capturer) FinishCaptureWithStatus(rec *Record, statusCode int, bytesWri
 		Size:   bytesWritten,
 	}
 
-	c.finishRecord(rec)
+	return c.finishRecord(rec)
 }
 
 // finishRecord stores and writes the record.
-func (c *Capturer) finishRecord(rec *Record) {
+func (c *Capturer) finishRecord(rec *Record) error {
 	// Store record
 	c.mu.Lock()
 	c.records = append(c.records, *rec)
@@ -264,7 +264,7 @@ func (c *Capturer) finishRecord(rec *Record) {
 	}
 
 	// Write to output
-	c.writeRecord(rec)
+	return c.writeRecord(rec)
 }
 
 // filterHeaders filters sensitive headers.
@@ -299,9 +299,9 @@ func (c *Capturer) parseBody(body []byte, contentType string) interface{} {
 }
 
 // writeRecord writes a record to the output.
-func (c *Capturer) writeRecord(rec *Record) {
+func (c *Capturer) writeRecord(rec *Record) error {
 	if c.output == nil {
-		return
+		return nil
 	}
 
 	var data []byte
@@ -317,13 +317,18 @@ func (c *Capturer) writeRecord(rec *Record) {
 	}
 
 	if err != nil {
-		return
+		return err
 	}
 
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	c.output.Write(data)
-	c.output.Write([]byte("\n"))
+	if _, err := c.output.Write(data); err != nil {
+		return err
+	}
+	if _, err := c.output.Write([]byte("\n")); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Records returns all captured records.

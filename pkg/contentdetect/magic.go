@@ -26,60 +26,60 @@ var magicSignatures = []magicSignature{
 	{bytes: []byte{0x00, 0x00, 0x02, 0x00}, mimeType: "image/x-icon", extension: "cur", isBinary: true},          // CUR
 
 	// Audio
-	{bytes: []byte{0x49, 0x44, 0x33}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},                     // ID3 tag
-	{bytes: []byte{0xFF, 0xFB}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},                           // MP3 frame sync
-	{bytes: []byte{0xFF, 0xFA}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},                           // MP3 frame sync
-	{bytes: []byte{0xFF, 0xF3}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},                           // MP3 frame sync
-	{bytes: []byte{0xFF, 0xF2}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},                           // MP3 frame sync
-	{bytes: []byte{0x4F, 0x67, 0x67, 0x53}, mimeType: "audio/ogg", extension: "ogg", isBinary: true},                // OggS
-	{bytes: []byte{0x66, 0x4C, 0x61, 0x43}, mimeType: "audio/flac", extension: "flac", isBinary: true},              // fLaC
-	{bytes: []byte{0x52, 0x49, 0x46, 0x46}, mimeType: "audio/wav", extension: "wav", isBinary: true},                // RIFF (check WAVE later)
+	{bytes: []byte{0x49, 0x44, 0x33}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},        // ID3 tag
+	{bytes: []byte{0xFF, 0xFB}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},              // MP3 frame sync
+	{bytes: []byte{0xFF, 0xFA}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},              // MP3 frame sync
+	{bytes: []byte{0xFF, 0xF3}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},              // MP3 frame sync
+	{bytes: []byte{0xFF, 0xF2}, mimeType: "audio/mpeg", extension: "mp3", isBinary: true},              // MP3 frame sync
+	{bytes: []byte{0x4F, 0x67, 0x67, 0x53}, mimeType: "audio/ogg", extension: "ogg", isBinary: true},   // OggS
+	{bytes: []byte{0x66, 0x4C, 0x61, 0x43}, mimeType: "audio/flac", extension: "flac", isBinary: true}, // fLaC
+	{bytes: []byte{0x52, 0x49, 0x46, 0x46}, mimeType: "audio/wav", extension: "wav", isBinary: true},   // RIFF (check WAVE later)
 	{bytes: []byte{0x00, 0x00, 0x00, 0x20, 0x66, 0x74, 0x79, 0x70}, mimeType: "audio/mp4", extension: "m4a", isBinary: true},
 
 	// Video
 	{bytes: []byte{0x00, 0x00, 0x00, 0x1C, 0x66, 0x74, 0x79, 0x70}, mimeType: "video/mp4", extension: "mp4", isBinary: true},
 	{bytes: []byte{0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70}, mimeType: "video/mp4", extension: "mp4", isBinary: true},
 	{bytes: []byte{0x00, 0x00, 0x00, 0x14, 0x66, 0x74, 0x79, 0x70}, mimeType: "video/mp4", extension: "mp4", isBinary: true},
-	{bytes: []byte{0x1A, 0x45, 0xDF, 0xA3}, mimeType: "video/webm", extension: "webm", isBinary: true},              // EBML (WebM/MKV)
+	{bytes: []byte{0x1A, 0x45, 0xDF, 0xA3}, mimeType: "video/webm", extension: "webm", isBinary: true}, // EBML (WebM/MKV)
 	{bytes: []byte{0x00, 0x00, 0x00, 0x14, 0x66, 0x74, 0x79, 0x70, 0x71, 0x74}, mimeType: "video/quicktime", extension: "mov", isBinary: true},
-	{bytes: []byte{0x52, 0x49, 0x46, 0x46}, mimeType: "video/x-msvideo", extension: "avi", isBinary: true},          // RIFF (check AVI later)
-	{bytes: []byte{0x46, 0x4C, 0x56, 0x01}, mimeType: "video/x-flv", extension: "flv", isBinary: true},              // FLV
+	{bytes: []byte{0x52, 0x49, 0x46, 0x46}, mimeType: "video/x-msvideo", extension: "avi", isBinary: true}, // RIFF (check AVI later)
+	{bytes: []byte{0x46, 0x4C, 0x56, 0x01}, mimeType: "video/x-flv", extension: "flv", isBinary: true},     // FLV
 
 	// Archives
-	{bytes: []byte{0x50, 0x4B, 0x03, 0x04}, mimeType: "application/zip", extension: "zip", isBinary: true},          // PK.. (ZIP)
-	{bytes: []byte{0x50, 0x4B, 0x05, 0x06}, mimeType: "application/zip", extension: "zip", isBinary: true},          // Empty ZIP
-	{bytes: []byte{0x50, 0x4B, 0x07, 0x08}, mimeType: "application/zip", extension: "zip", isBinary: true},          // Spanned ZIP
-	{bytes: []byte{0x1F, 0x8B, 0x08}, mimeType: "application/gzip", extension: "gz", isBinary: true},                // Gzip
-	{bytes: []byte{0x42, 0x5A, 0x68}, mimeType: "application/x-bzip2", extension: "bz2", isBinary: true},            // BZh
+	{bytes: []byte{0x50, 0x4B, 0x03, 0x04}, mimeType: "application/zip", extension: "zip", isBinary: true}, // PK.. (ZIP)
+	{bytes: []byte{0x50, 0x4B, 0x05, 0x06}, mimeType: "application/zip", extension: "zip", isBinary: true}, // Empty ZIP
+	{bytes: []byte{0x50, 0x4B, 0x07, 0x08}, mimeType: "application/zip", extension: "zip", isBinary: true}, // Spanned ZIP
+	{bytes: []byte{0x1F, 0x8B, 0x08}, mimeType: "application/gzip", extension: "gz", isBinary: true},       // Gzip
+	{bytes: []byte{0x42, 0x5A, 0x68}, mimeType: "application/x-bzip2", extension: "bz2", isBinary: true},   // BZh
 	{bytes: []byte{0xFD, 0x37, 0x7A, 0x58, 0x5A, 0x00}, mimeType: "application/x-xz", extension: "xz", isBinary: true},
 	{bytes: []byte{0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C}, mimeType: "application/x-7z-compressed", extension: "7z", isBinary: true},
-	{bytes: []byte{0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00}, mimeType: "application/x-rar-compressed", extension: "rar", isBinary: true},      // RAR 1.5-4.0
+	{bytes: []byte{0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00}, mimeType: "application/x-rar-compressed", extension: "rar", isBinary: true},       // RAR 1.5-4.0
 	{bytes: []byte{0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00}, mimeType: "application/x-rar-compressed", extension: "rar", isBinary: true}, // RAR 5.0+
 	{bytes: []byte{0x75, 0x73, 0x74, 0x61, 0x72}, offset: 257, mimeType: "application/x-tar", extension: "tar", isBinary: true},                 // ustar (TAR)
 
 	// Documents
-	{bytes: []byte{0x25, 0x50, 0x44, 0x46, 0x2D}, mimeType: "application/pdf", extension: "pdf", isBinary: true},    // %PDF-
+	{bytes: []byte{0x25, 0x50, 0x44, 0x46, 0x2D}, mimeType: "application/pdf", extension: "pdf", isBinary: true},                      // %PDF-
 	{bytes: []byte{0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1}, mimeType: "application/msword", extension: "doc", isBinary: true}, // OLE2 (DOC, XLS, PPT)
 
 	// Executables
-	{bytes: []byte{0x4D, 0x5A}, mimeType: "application/x-dosexec", extension: "exe", isBinary: true},                // MZ (DOS/Windows executable)
-	{bytes: []byte{0x7F, 0x45, 0x4C, 0x46}, mimeType: "application/x-elf", extension: "", isBinary: true},           // ELF (Linux executable)
-	{bytes: []byte{0xCF, 0xFA, 0xED, 0xFE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true},   // Mach-O 32-bit
-	{bytes: []byte{0xCE, 0xFA, 0xED, 0xFE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true},   // Mach-O 32-bit (reverse)
-	{bytes: []byte{0xCA, 0xFE, 0xBA, 0xBE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true},   // Mach-O Universal/Java class
-	{bytes: []byte{0xFE, 0xED, 0xFA, 0xCF}, mimeType: "application/x-mach-binary", extension: "", isBinary: true},   // Mach-O 64-bit
-	{bytes: []byte{0xFE, 0xED, 0xFA, 0xCE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true},   // Mach-O 64-bit (reverse)
+	{bytes: []byte{0x4D, 0x5A}, mimeType: "application/x-dosexec", extension: "exe", isBinary: true},              // MZ (DOS/Windows executable)
+	{bytes: []byte{0x7F, 0x45, 0x4C, 0x46}, mimeType: "application/x-elf", extension: "", isBinary: true},         // ELF (Linux executable)
+	{bytes: []byte{0xCF, 0xFA, 0xED, 0xFE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true}, // Mach-O 32-bit
+	{bytes: []byte{0xCE, 0xFA, 0xED, 0xFE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true}, // Mach-O 32-bit (reverse)
+	{bytes: []byte{0xCA, 0xFE, 0xBA, 0xBE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true}, // Mach-O Universal/Java class
+	{bytes: []byte{0xFE, 0xED, 0xFA, 0xCF}, mimeType: "application/x-mach-binary", extension: "", isBinary: true}, // Mach-O 64-bit
+	{bytes: []byte{0xFE, 0xED, 0xFA, 0xCE}, mimeType: "application/x-mach-binary", extension: "", isBinary: true}, // Mach-O 64-bit (reverse)
 
 	// Fonts
-	{bytes: []byte{0x77, 0x4F, 0x46, 0x46}, mimeType: "font/woff", extension: "woff", isBinary: true},               // wOFF
-	{bytes: []byte{0x77, 0x4F, 0x46, 0x32}, mimeType: "font/woff2", extension: "woff2", isBinary: true},             // wOF2
-	{bytes: []byte{0x00, 0x01, 0x00, 0x00}, mimeType: "font/ttf", extension: "ttf", isBinary: true},                 // TrueType
-	{bytes: []byte{0x4F, 0x54, 0x54, 0x4F}, mimeType: "font/otf", extension: "otf", isBinary: true},                 // OTTO (OpenType)
+	{bytes: []byte{0x77, 0x4F, 0x46, 0x46}, mimeType: "font/woff", extension: "woff", isBinary: true},   // wOFF
+	{bytes: []byte{0x77, 0x4F, 0x46, 0x32}, mimeType: "font/woff2", extension: "woff2", isBinary: true}, // wOF2
+	{bytes: []byte{0x00, 0x01, 0x00, 0x00}, mimeType: "font/ttf", extension: "ttf", isBinary: true},     // TrueType
+	{bytes: []byte{0x4F, 0x54, 0x54, 0x4F}, mimeType: "font/otf", extension: "otf", isBinary: true},     // OTTO (OpenType)
 
 	// Other binary
-	{bytes: []byte{0x00, 0x61, 0x73, 0x6D}, mimeType: "application/wasm", extension: "wasm", isBinary: true},        // WebAssembly
-	{bytes: []byte{0x46, 0x57, 0x53}, mimeType: "application/x-shockwave-flash", extension: "swf", isBinary: true},  // FWS (uncompressed SWF)
-	{bytes: []byte{0x43, 0x57, 0x53}, mimeType: "application/x-shockwave-flash", extension: "swf", isBinary: true},  // CWS (compressed SWF)
+	{bytes: []byte{0x00, 0x61, 0x73, 0x6D}, mimeType: "application/wasm", extension: "wasm", isBinary: true},                                                                                // WebAssembly
+	{bytes: []byte{0x46, 0x57, 0x53}, mimeType: "application/x-shockwave-flash", extension: "swf", isBinary: true},                                                                          // FWS (uncompressed SWF)
+	{bytes: []byte{0x43, 0x57, 0x53}, mimeType: "application/x-shockwave-flash", extension: "swf", isBinary: true},                                                                          // CWS (compressed SWF)
 	{bytes: []byte{0x53, 0x51, 0x4C, 0x69, 0x74, 0x65, 0x20, 0x66, 0x6F, 0x72, 0x6D, 0x61, 0x74, 0x20, 0x33, 0x00}, mimeType: "application/x-sqlite3", extension: "sqlite", isBinary: true}, // SQLite
 
 	// Text formats with specific signatures (these are text, not binary)

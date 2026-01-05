@@ -45,17 +45,11 @@ func (w *windowsProxy) GetProxy() (*ProxyConfig, error) {
 	config := &ProxyConfig{}
 
 	// Check if proxy is enabled
-	enabled, err := w.getRegistryValue("ProxyEnable")
-	if err != nil {
-		return nil, err
-	}
+	enabled := w.getRegistryValue("ProxyEnable")
 	config.Enabled = enabled == "1" || enabled == "0x1"
 
 	// Get proxy server
-	server, err := w.getRegistryValue("ProxyServer")
-	if err != nil {
-		return config, nil // Not an error if not set
-	}
+	server := w.getRegistryValue("ProxyServer")
 
 	if server != "" {
 		config.HTTPProxy = "http://" + server
@@ -122,13 +116,14 @@ func (w *windowsProxy) setRegistryValue(name, value string) error {
 }
 
 // getRegistryValue gets a value from the Windows Internet Settings registry key.
-func (w *windowsProxy) getRegistryValue(name string) (string, error) {
+// Returns empty string if value doesn't exist.
+func (w *windowsProxy) getRegistryValue(name string) string {
 	regPath := `HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings`
 
 	cmd := exec.Command("reg", "query", regPath, "/v", name)
 	output, err := cmd.Output()
 	if err != nil {
-		return "", nil // Value doesn't exist
+		return "" // Value doesn't exist
 	}
 
 	// Parse output to extract value
@@ -137,12 +132,12 @@ func (w *windowsProxy) getRegistryValue(name string) (string, error) {
 		if strings.Contains(line, name) {
 			fields := strings.Fields(line)
 			if len(fields) >= 3 {
-				return fields[len(fields)-1], nil
+				return fields[len(fields)-1]
 			}
 		}
 	}
 
-	return "", nil
+	return ""
 }
 
 // notifySettingsChange notifies Windows that Internet settings have changed.

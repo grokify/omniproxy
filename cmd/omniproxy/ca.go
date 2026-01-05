@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/grokify/omniproxy/pkg/ca"
 	"github.com/grokify/omniproxy/pkg/system"
@@ -131,7 +132,8 @@ func runCAInstall(opts *caInstallOptions) error {
 	fmt.Printf("Certificate: %s\n", certPath)
 
 	if err := sp.InstallCA(certPath, "OmniProxy Root CA"); err != nil {
-		return fmt.Errorf("failed to install CA: %w\n\nYou may need to run this command with sudo.", err)
+		fmt.Fprintln(os.Stderr, "\nYou may need to run this command with sudo.")
+		return fmt.Errorf("failed to install CA: %w", err)
 	}
 
 	fmt.Println("CA certificate installed successfully!")
@@ -196,7 +198,8 @@ func runCAInfo(opts *caInstallOptions) error {
 
 	loadedCA, err := ca.Load(certPath, keyPath)
 	if err != nil {
-		return fmt.Errorf("failed to load CA: %w\n\nRun 'omniproxy ca generate' to create a CA.", err)
+		fmt.Fprintln(os.Stderr, "\nRun 'omniproxy ca generate' to create a CA.")
+		return fmt.Errorf("failed to load CA: %w", err)
 	}
 
 	fmt.Printf("CA Certificate Information:\n")
