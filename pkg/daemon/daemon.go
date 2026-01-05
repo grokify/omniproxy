@@ -14,7 +14,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"sync"
-	"syscall"
 	"time"
 
 	"github.com/grokify/omniproxy/pkg/backend"
@@ -535,8 +534,8 @@ func IsRunning(pidFile string) (bool, int, error) {
 		return false, 0, nil
 	}
 
-	// Send signal 0 to check if process is alive
-	err = process.Signal(syscall.Signal(0))
+	// Check if process is alive
+	err = checkProcessAlive(process)
 	if err != nil {
 		// Process doesn't exist, clean up stale PID file
 		os.Remove(pidFile)
@@ -568,9 +567,7 @@ func StartBackground(args []string) error {
 	cmd := exec.Command(executable, args...)
 	cmd.Stdout = logFile
 	cmd.Stderr = logFile
-	cmd.SysProcAttr = &syscall.SysProcAttr{
-		Setsid: true, // Create new session (detach from terminal)
-	}
+	setSysProcAttr(cmd)
 
 	if err := cmd.Start(); err != nil {
 		logFile.Close()
@@ -615,7 +612,7 @@ func StopByPID(pidFile string) error {
 		return fmt.Errorf("failed to find process: %w", err)
 	}
 
-	if err := process.Signal(syscall.SIGTERM); err != nil {
+	if err := signalTerminate(process); err != nil {
 		return fmt.Errorf("failed to send signal: %w", err)
 	}
 

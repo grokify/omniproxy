@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 	"time"
 )
@@ -81,13 +82,15 @@ func TestSaveAndLoad(t *testing.T) {
 		t.Fatalf("failed to save CA: %v", err)
 	}
 
-	// Check file permissions
-	keyInfo, err := os.Stat(keyPath)
-	if err != nil {
-		t.Fatalf("failed to stat key file: %v", err)
-	}
-	if keyInfo.Mode().Perm() != 0600 {
-		t.Errorf("expected key file permissions 0600, got %o", keyInfo.Mode().Perm())
+	// Check file permissions (skip on Windows as it doesn't support Unix permissions)
+	if runtime.GOOS != "windows" {
+		keyInfo, err := os.Stat(keyPath)
+		if err != nil {
+			t.Fatalf("failed to stat key file: %v", err)
+		}
+		if keyInfo.Mode().Perm() != 0600 {
+			t.Errorf("expected key file permissions 0600, got %o", keyInfo.Mode().Perm())
+		}
 	}
 
 	// Load CA
