@@ -5,7 +5,7 @@ go 1.24.11
 require (
 	entgo.io/ent v0.14.5
 	github.com/elazarl/goproxy v1.7.2
-	github.com/grokify/mogo v0.72.5
+	github.com/grokify/mogo v0.72.6
 	github.com/lib/pq v1.10.9
 	github.com/mattn/go-sqlite3 v1.14.33
 	github.com/prometheus/client_golang v1.23.2
@@ -48,8 +48,8 @@ require (
 	golang.org/x/mod v0.31.0 // indirect
 	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 	golang.org/x/tools v0.40.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
