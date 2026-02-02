@@ -6,7 +6,7 @@ require (
 	entgo.io/ent v0.14.5
 	github.com/elazarl/goproxy v1.8.0
 	github.com/grokify/mogo v0.72.6
-	github.com/lib/pq v1.10.9
+	github.com/lib/pq v1.11.1
 	github.com/mattn/go-sqlite3 v1.14.33
 	github.com/prometheus/client_golang v1.23.2
 	github.com/spf13/cobra v1.10.2
