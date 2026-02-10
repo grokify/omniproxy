@@ -7,7 +7,7 @@ require (
 	github.com/elazarl/goproxy v1.8.1
 	github.com/grokify/mogo v0.73.0
 	github.com/lib/pq v1.11.1
-	github.com/mattn/go-sqlite3 v1.14.33
+	github.com/mattn/go-sqlite3 v1.14.34
 	github.com/prometheus/client_golang v1.23.2
 	github.com/spf13/cobra v1.10.2
 	go.opentelemetry.io/otel v1.40.0
