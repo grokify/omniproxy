@@ -4,7 +4,7 @@ go 1.24.11
 
 require (
 	entgo.io/ent v0.14.5
-	github.com/elazarl/goproxy v1.8.1
+	github.com/elazarl/goproxy v1.8.2
 	github.com/grokify/mogo v0.73.0
 	github.com/lib/pq v1.11.2
 	github.com/mattn/go-sqlite3 v1.14.34
