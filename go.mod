@@ -1,11 +1,11 @@
 module github.com/grokify/omniproxy
 
-go 1.24.11
+go 1.25.0
 
 require (
 	entgo.io/ent v0.14.5
 	github.com/elazarl/goproxy v1.8.2
-	github.com/grokify/mogo v0.73.0
+	github.com/grokify/mogo v0.73.2
 	github.com/lib/pq v1.11.2
 	github.com/mattn/go-sqlite3 v1.14.34
 	github.com/prometheus/client_golang v1.23.2
@@ -46,7 +46,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.40.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	golang.org/x/mod v0.32.0 // indirect
-	golang.org/x/net v0.49.0 // indirect
+	golang.org/x/net v0.50.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
