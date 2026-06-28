@@ -23,7 +23,7 @@
  [loc-svg]: https://tokei.rs/b1/github/grokify/omniproxy
  [repo-url]: https://github.com/grokify/omniproxy
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
- [license-url]: https://github.com/grokify/omniproxy/blob/master/LICENSE
+ [license-url]: https://github.com/grokify/omniproxy/blob/main/LICENSE
 
 Universal HTTP/HTTPS proxy with MITM support for traffic capture and analysis.
 
